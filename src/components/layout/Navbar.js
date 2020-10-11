@@ -1,13 +1,12 @@
-import React from 'react';
+import React, { Fragment, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+import AuthContext from '../../context/auth/authContext'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +21,30 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = ({ title }) => {
+
+  const authContext = useContext(AuthContext)
+
+  const { isAuthenticated, logout, user } = authContext
+
+  const onLogout = () => {
+    logout()
+  }
+
   const classes = useStyles();
+
+  const authLinks = (
+    <Fragment>
+      <p>Hello {user && user.name}</p>
+      <Button onClick={onLogout} style={{color: 'white'}}><i className='fas fa-sign-out-alt'></i>Logout</Button>
+    </Fragment>
+  )
+
+  const guestLinks = (
+    <Fragment>
+      <Link to='/'><Button color="inherit">Home</Button></Link>
+      <Link to='/about'><Button color="inherit">About</Button></Link>
+    </Fragment>
+  )
 
   return (
     <div className={classes.root}>
@@ -31,10 +53,7 @@ const Navbar = ({ title }) => {
           <Typography variant="h6" className={classes.title}>
             { title }
           </Typography>
-          <Link to='/'><Button color="inherit">Home</Button></Link>
-          <Link to='/about'><Button color="inherit">About</Button></Link>
-          <Link to='/login'><Button color="inherit">Log In</Button></Link>
-          <Link to='/register'><Button color="inherit">Register</Button></Link>
+          { isAuthenticated ? authLinks : guestLinks }
         </Toolbar>
       </AppBar>
     </div>
