@@ -1,17 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
-import Grid from '@material-ui/core/Grid';
-import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AuthContext from '../../context/auth/authContext'
+import AlertContext from '../../context/alert/alertContext'
+
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -33,7 +31,26 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const Login = () => {
+const Login = (props) => {
+
+  const alertContext = useContext(AlertContext)
+  const authContext = useContext(AuthContext)
+
+  const { setAlert } = alertContext
+  const { login, error, clearErrors, isAuthenticated } = authContext
+
+  useEffect(() => {
+
+    if (isAuthenticated) {
+      props.history.push('/')
+    }
+
+    if (error === "Invalid credentials") {
+      setAlert(error, "danger")
+      clearErrors()
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated, props.history])
 
   const [user, setUser] = useState({
     email: '',
@@ -53,7 +70,14 @@ const Login = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('Register complete')
+    if(email === '' || password === '') {
+      setAlert('Please fill in all fields', 'danger')
+    } else {
+      login({
+        email,
+        password
+      })
+    }
   }
 
   return (
@@ -72,9 +96,9 @@ const Login = () => {
             margin="normal"
             required
             fullWidth
-            id="name"
-            label="Name"
-            name="name"
+            id="email"
+            label="Email"
+            name="email"
             onChange={onChange}
           />
           <TextField
@@ -82,10 +106,10 @@ const Login = () => {
             margin="normal"
             required
             fullWidth
-            name="email"
-            label="Email Address"
-            type="email"
-            id="email"
+            name="password"
+            label="Password"
+            type="password"
+            id="password"
             onChange={onChange}
           />
           <Button
