@@ -94,7 +94,6 @@ const Login = (props) => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="email"
             label="Email"
@@ -104,7 +103,6 @@ const Login = (props) => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Password"
