@@ -35,14 +35,16 @@ const Navbar = ({ title }) => {
   const authLinks = (
     <Fragment>
       <p>Hello {user && user.name}</p>
+      <Link to='/'><Button color="inherit">Home</Button></Link>
+      <Link to='/about'><Button color="inherit">About</Button></Link>
       <Button onClick={onLogout} style={{color: 'white'}}><i className='fas fa-sign-out-alt'></i>Logout</Button>
     </Fragment>
   )
 
   const guestLinks = (
     <Fragment>
-      <Link to='/'><Button color="inherit">Home</Button></Link>
-      <Link to='/about'><Button color="inherit">About</Button></Link>
+      <Link to='/login'><Button color="inherit">Login</Button></Link>
+      <Link to='/register'><Button color="inherit">Register</Button></Link>
     </Fragment>
   )
 
