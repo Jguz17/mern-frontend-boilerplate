@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import AlertContext from '../../context/alert/alertContext'
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -35,6 +36,10 @@ const useStyles = makeStyles((theme) => ({
 
 const Register = () => {
 
+  const alertContext = useContext(AlertContext)
+
+  const { setAlert } = alertContext
+
   const [user, setUser] = useState({
     name: '',
     email: '',
@@ -55,7 +60,13 @@ const Register = () => {
 
   const onSubmit = (e) => {
     e.preventDefault()
-    console.log('Register complete')
+    if (name === '' || email === '' || password === '') {
+      setAlert('Please enter all fields', 'danger')
+    } else if (password !== password2) {
+      setAlert('Passwords do not match', 'danger')
+    } else {
+      console.log('Register submit')
+    }
   }
 
   return (
@@ -72,7 +83,6 @@ const Register = () => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="name"
             label="Name"
@@ -82,7 +92,6 @@ const Register = () => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="email"
             label="Email Address"
@@ -93,23 +102,23 @@ const Register = () => {
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password"
             label="Password"
             type="password"
             id="password"
+            minLength='6'
             onChange={onChange}
           />
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="password2"
             label="Confirm Password"
             type="password"
             id="password2"
+            minLength='6'
             onChange={onChange}
           />
           <Button
