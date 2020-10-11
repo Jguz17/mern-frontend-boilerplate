@@ -9,6 +9,11 @@
   font-family: roboto-black;
 }
 
+@font-face {
+  src: url('./styles/fonts/Roboto-Medium.ttf');
+  font-family: roboto-medium;
+}
+
 h1,
 h2,
 h3,
@@ -16,4 +21,13 @@ h4,
 h5,
 h6 {
   font-family: roboto-black;
+}
+p {
+  font-family: roboto-medium;
+
+}
+
+a {
+  color: white;
+  text-decoration: none;
 }
