@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { Fragment, useContext, useEffect} from 'react'
+import AuthContext from '../../context/auth/authContext'
 
-function Home() {
+const Home = () => {
+
+    const authContext = useContext(AuthContext)
+
+    useEffect(() => {
+        authContext.loadUser()
+        // eslint-disable-next-line
+    }, [])
+
     return (
-        <div>
-            Home page
-        </div>
+        <Fragment>
+            <h1>Home Page</h1>
+        </Fragment>
     )
 }
 
