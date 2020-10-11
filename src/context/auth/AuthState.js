@@ -41,7 +41,7 @@ const AuthState = props => {
             isAuthenticated: state.isAuthenticated,
             loading: true,
             user: state.user,
-            token: state.error
+            error: state.error
         }}
       >
         {props.children}

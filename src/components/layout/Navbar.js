@@ -33,6 +33,8 @@ const Navbar = ({ title }) => {
           </Typography>
           <Link to='/'><Button color="inherit">Home</Button></Link>
           <Link to='/about'><Button color="inherit">About</Button></Link>
+          <Link to='/login'><Button color="inherit">Log In</Button></Link>
+          <Link to='/register'><Button color="inherit">Register</Button></Link>
         </Toolbar>
       </AppBar>
     </div>
